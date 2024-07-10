@@ -12,7 +12,7 @@ export default function NewMessagePage() {
     // revalidatePath('/messages');  
 
     // msg: represente le tag de revalidation de la page messages 
-    // revalidateTag('msg');
+    revalidateTag('msg');
     redirect('/messages');
   }
 
