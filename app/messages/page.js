@@ -1,5 +1,6 @@
-import Messages from '@/components/messages';
-import { unstable_noStore } from 'next/cache';
+import Messages from "@/components/messages";
+import { revalidateTag } from "next/cache";
+// import { unstable_noStore } from 'next/cache';
 
 /*
     Nous allons essayer de creer une configuration de cache pour toutes les requetes effectuees dans notre page MessagesPage.
@@ -18,20 +19,25 @@ export default async function MessagesPage() {
 
   try {
     // request to the backend to get the messages
-    const response = await fetch('http://localhost:8082/messages', {
+    const response = await fetch("http://localhost:8082/messages", {
       // gestion du cache
+
+      // configuration pour revalidateTag
+      next: {
+        tags: ["msg"],
+      },
+
       //cache: 'no-store',  /* ne pas sotocker de copie de la reponse dans le cache du navigateur. Cela signifie que chaque fois que la requête est effectuée, elle sera envoyée au serveur sans essayer de récupérer la réponse du cache local. C'est utile pour s'assurer que les données récupérées sont toujours les plus récentes, en évitant d'utiliser une version potentiellement obsolète stockée dans le cache.*/
 
       // gestion de la revalidation: utilisera la copie en cache de la réponse pendant 5 secondes, mais enverra une nouvelle requête au serveur pour obtenir une nouvelle version des données après ce délai.
       // next: {
-      //   revalidate: 5, // 5 second  
+      //   revalidate: 5, // 5 second
       // }
 
-    // mettre une entete personnalisee a une requete
-    //   headers: {
-    //     'X-ID': 'page',
-    //   },
-
+      // mettre une entete personnalisee a une requete
+      //   headers: {
+      //     'X-ID': 'page',
+      //   },
     });
 
     // capter les erreurs
