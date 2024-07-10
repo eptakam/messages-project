@@ -57,7 +57,7 @@ export default async function MessagesPage() {
     */
 
     // gestion du cache pour une requete adresse a une base de donnees
-    const messages = getMessages();
+    const messages = await getMessages();
 
     
 
